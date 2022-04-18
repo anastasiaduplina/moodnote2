@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "552432264203",
+    "firebase_url": "https://moodnote2-6883a-default-rtdb.firebaseio.com",
+    "project_id": "moodnote2-6883a",
+    "storage_bucket": "moodnote2-6883a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552432264203:android:a168511734d5134fa2130e",
+        "android_client_info": {
+          "package_name": "com.example.moodnote2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "552432264203-odqat6i6lgh6hshanh4nfo2aen130fgd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUdfHOyUK2cR1plAI1JuJlpWJRcYUNiIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "552432264203-odqat6i6lgh6hshanh4nfo2aen130fgd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">moodnote2</string>
+    <string name="login">Login</string>
+    <string name="password">password</string>
+    <string name="register">Register</string>
+    <string name="email">email</string>
+    <string name="register_login">Register/Login</string>
+</resources>
