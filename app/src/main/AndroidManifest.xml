@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Moodnote2">
+        <activity
+            android:name=".MainActivity2"
+            android:exported="true"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/Theme.Moodnote2.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
