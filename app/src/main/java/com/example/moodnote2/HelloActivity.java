@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 public class HelloActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -50,7 +51,7 @@ public class HelloActivity extends AppCompatActivity {
                 String ddescription=description.getText().toString();
                 if (!nname.equals("") ){
                     //запись имени и описания пользователя в базу данных
-                    Profile pr=new Profile(cUser.getEmail(),nname,ddescription,new ArrayList<String>());
+                    Profile pr=new Profile(cUser.getEmail(),nname,ddescription);
                     databaseReference.child("user").child(cUser.getUid()).setValue(pr);
                     Intent i= new Intent(HelloActivity.this,MainActivity2.class);
                     startActivity(i);

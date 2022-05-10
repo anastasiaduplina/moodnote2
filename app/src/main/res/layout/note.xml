@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="357dp"
+        android:layout_height="59dp"
+        app:layout_constraintBottom_toTopOf="@+id/savenote"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/textnote"
+            android:layout_width="350dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:autofillHints=""
+            android:hint="@string/zametka"
+            android:inputType="textLongMessage"
+
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/savenote"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/deleteBtn"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_margin="10dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@mipmap/krestik"
+        android:contentDescription="@string/todo"
+        app:layout_constraintBottom_toTopOf="@+id/savenote"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/savenote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/saverus"
+        android:textColor="@color/black"
+        android:visibility="visible"
+        app:backgroundTint="@color/green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textnote" />-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,13 +15,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase db;
@@ -72,8 +69,20 @@ public class MainActivity extends AppCompatActivity {
                             if (task.isSuccessful()){
                                 cUser=mAuth.getCurrentUser();
                                 //создание записи в бд, где хранится имя, эл почта и описание пользователя
-                                Profile pr=new Profile(cUser.getEmail(),cUser.getUid(),"",new ArrayList<String>());
-                                dbr.child(cUser.getUid()).setValue(pr);
+
+                                ProfileMood prm1=new ProfileMood(1,"#FF9fd4a9","green");
+                                ProfileMood prm2=new ProfileMood(2,"#FFffedb3","yellow");
+                                ProfileMood prm3=new ProfileMood(3,"#FFa7bffc","blue");
+                                ProfileMood prm4=new ProfileMood(4,"#FFfca4a4","red");
+                                ProfileMood prm5=new ProfileMood(5,"#FFffbadf","pink");
+                                Profile pr=new Profile(cUser.getEmail(),cUser.getUid(),"");
+                                dbr.child("user").child(cUser.getUid()).setValue(pr);
+                                dbr.child("users_mood").child(cUser.getUid()).child(prm1.moodId+"").setValue(prm1);
+                                dbr.child("users_mood").child(cUser.getUid()).child(prm2.moodId+"").setValue(prm2);
+                                dbr.child("users_mood").child(cUser.getUid()).child(prm3.moodId+"").setValue(prm3);
+                                dbr.child("users_mood").child(cUser.getUid()).child(prm4.moodId+"").setValue(prm4);
+                                dbr.child("users_mood").child(cUser.getUid()).child(prm5.moodId+"").setValue(prm5);
+
                                 Toast.makeText(getApplicationContext(),"create user",Toast.LENGTH_SHORT).show();
                                 Intent i=new Intent(MainActivity.this,HelloActivity.class);
                                 startActivity(i);
@@ -121,6 +130,6 @@ public class MainActivity extends AppCompatActivity {
         registerButton=(Button)findViewById(R.id.lButtonRegister);
         mAuth=FirebaseAuth.getInstance();
         db=FirebaseDatabase.getInstance();
-        dbr=db.getReference("user");
+        dbr=db.getReference();
     }
 }
