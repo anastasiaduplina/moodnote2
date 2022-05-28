@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,9 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.moodnote2.HelloActivity;
-import com.example.moodnote2.MainActivity;
+import com.example.moodnote2.AddInformationActivity;
+import com.example.moodnote2.RegistAndLoginActivity;
 import com.example.moodnote2.databinding.FragmentProfileBinding;
+import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment {
 
@@ -37,18 +39,19 @@ public class ProfileFragment extends Fragment {
         final TextView textView3=binding.description;
         final Button changeb=binding.changebut;
         final Button exit=binding.exit;
+        final ImageView image=binding.imageProfile;
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 profileViewModel.exitbut();
-                Intent i=new Intent(getContext(), MainActivity.class);
+                Intent i=new Intent(getContext(), RegistAndLoginActivity.class);
                 startActivity(i);
             }
         });
         changeb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i =new Intent(getContext(), HelloActivity.class);
+                Intent i =new Intent(getContext(), AddInformationActivity.class);
                 startActivity(i);
             }
         });
@@ -68,6 +71,17 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
                 textView3.setText(s);
+            }
+        });
+        profileViewModel.getUri().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                try{
+                    Picasso.get().load(s).into(image);
+                }catch (Exception e){
+
+                }
+
             }
         });
         return root;

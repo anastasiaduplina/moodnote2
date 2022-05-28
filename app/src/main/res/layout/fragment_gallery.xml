@@ -17,7 +17,7 @@
         tools:text="email" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageProfile"
         android:layout_width="79dp"
         android:layout_height="86dp"
         android:contentDescription="icon of profile"

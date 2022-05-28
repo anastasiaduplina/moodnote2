@@ -10,18 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Moodnote2">
         <activity
-            android:name=".MainActivity2"
+            android:name=".MainActivityHome"
             android:exported="true"
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.Moodnote2.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".RegistAndLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HelloActivity" />
+        <activity android:name=".AddInformationActivity" />
     </application>
 
 </manifest>

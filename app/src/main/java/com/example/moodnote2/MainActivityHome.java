@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,15 +27,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
-public class MainActivity2 extends AppCompatActivity {
+public class MainActivityHome extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMain2Binding binding;
     private FirebaseAuth mAuth;
-    private  View view;
     private DatabaseReference dbr;
-    private Profile pr;
     private FirebaseUser cUser;
 
     @Override
@@ -58,7 +58,7 @@ public class MainActivity2 extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_profile, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_profile)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -83,33 +83,53 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         //подставляет в выдвижную шторку имя и эл почту пользователя
+        //fff();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fff();
+    }
+
+    public  void fff(){
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerLayout = navigationView.getHeaderView(0);
         TextView text1=(TextView) headerLayout.findViewById(R.id.namecool);
         TextView text2=(TextView)headerLayout.findViewById(R.id.emailcool);
+        ImageView imageView=(ImageView)headerLayout.findViewById(R.id.imageView);
         if (cUser!=null){
             dbr.child("user").child(cUser.getUid()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    pr = dataSnapshot.getValue(Profile.class);
-                    Log.i("ttaagg",pr.name.toString());
-                    text1.setText(pr.name.toString());
-                    text2.setText(pr.email.toString());
+                    Profile pr = dataSnapshot.getValue(Profile.class);
+                    if (pr.uri!=null){
+                        try {
+                            Picasso.get().load(pr.uri).fit().centerCrop().into(imageView);
+                        }catch (Exception e){
+                            //Toast.makeText(getApplicationContext(),"Что-то пошло не так",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    text1.setText(pr.name);
+                    text2.setText(pr.email);
+
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.i("error",databaseError.getMessage()+"");
+                    //Toast.makeText(getApplicationContext(),"Что-то пошло не так",Toast.LENGTH_SHORT).show();
                 }
             });
         }else{
-            Toast.makeText(getApplicationContext(),"user null",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(),"Что-то пошло не так",Toast.LENGTH_SHORT).show();
         }
-
     }
     private void init(){
         mAuth=FirebaseAuth.getInstance();
         dbr= FirebaseDatabase.getInstance().getReference();
         cUser=mAuth.getCurrentUser();
     }
+
 }

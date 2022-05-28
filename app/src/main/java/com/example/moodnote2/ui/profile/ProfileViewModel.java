@@ -23,6 +23,7 @@ public class ProfileViewModel extends ViewModel {
     private MutableLiveData<String> name;
     private MutableLiveData<String> email;
     private MutableLiveData<String> description;
+    private MutableLiveData<String> uri;
 
 
     private FirebaseAuth mAuth;
@@ -40,6 +41,7 @@ public class ProfileViewModel extends ViewModel {
         email=new MutableLiveData<>();
         name=new MutableLiveData<>();
         description=new MutableLiveData<>();
+        uri=new MutableLiveData<>();
         if (cUser!=null){
             email.setValue(cUser.getEmail()+"");
         }else{
@@ -52,6 +54,7 @@ public class ProfileViewModel extends ViewModel {
                 Log.i("tagg",String.valueOf(pr)+" ");
                 name.setValue(String.valueOf(pr.name)+"");
                 description.setValue(String.valueOf(pr.description)+"");
+                uri.setValue(pr.uri);
 
             }
 
@@ -79,5 +82,8 @@ public class ProfileViewModel extends ViewModel {
     }
     public LiveData<String> getDescription() {
         return description;
+    }
+    public LiveData<String> getUri() {
+        return uri;
     }
 }

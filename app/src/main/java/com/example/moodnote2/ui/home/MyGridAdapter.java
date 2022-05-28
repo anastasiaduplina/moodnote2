@@ -30,9 +30,9 @@ public class MyGridAdapter extends ArrayAdapter {
     //List<Events> events;
     LayoutInflater inflater;
     List<String> days;
-    ArrayList<String> moods;
+    ArrayList<Integer> moods;
 
-    public MyGridAdapter(@NonNull Context context, List<Date> dates,Calendar currentDate,List<String> days,ArrayList<String> moods) {
+    public MyGridAdapter(@NonNull Context context, List<Date> dates,Calendar currentDate,List<String> days,ArrayList<Integer> moods) {
         super(context, R.layout.single_cell_layout);
         this.dates=dates;
         this.currentDate=currentDate;
@@ -64,14 +64,16 @@ public class MyGridAdapter extends ArrayAdapter {
             view=inflater.inflate(R.layout.single_cell_layout,parent,false);
         }
 
-
+        TextView Day_Number = view.findViewById(R.id.calendar_day);
         if (displayMonth == currentMonth && displayYear==currentYear){
             view.setBackgroundColor(getContext().getResources().getColor(R.color.white));
             //view.setBackground// https://github.com/roomorama/Caldroid
+            Day_Number.setTextColor(Color.parseColor("#353535"));
         }else{
-            view.setBackgroundColor(Color.parseColor("#CCCCCC"));
+            view.setBackgroundColor(getContext().getResources().getColor(R.color.white));
+            Day_Number.setTextColor(Color.parseColor("#CCCCCC"));
         }
-        TextView Day_Number = view.findViewById(R.id.calendar_day);
+
         TextView EventNumber = view.findViewById(R.id.events_id);
         Day_Number.setText(String.valueOf(DayNo));
 
@@ -105,7 +107,11 @@ public class MyGridAdapter extends ArrayAdapter {
             }
             if (DayNo==Integer.parseInt(dday[0]) && displayMonth==Integer.parseInt(dday[1]) && displayYear==Integer.parseInt(dday[2])){
                 try {
-                    view.setBackgroundColor(Color.parseColor(moods.get(Integer.parseInt(dday[3])-1)));
+
+                    if(moods.contains(Integer.parseInt(dday[3]))){
+                        view.setBackgroundColor(Integer.parseInt(dday[3]));
+                    }
+
                 }catch (Exception e){
                     Log.e("error",e.getMessage()+moods+" "+dday[3]);
                 }
@@ -130,7 +136,7 @@ public class MyGridAdapter extends ArrayAdapter {
             //view.setBackgroundColor(getContext().getResources().getColor(R.color.green));
             //view.setBackground// https://github.com/roomorama/Caldroid
         }else{
-            view.setBackgroundColor(Color.parseColor("#CCCCCC"));
+            view.setBackgroundColor(getContext().getResources().getColor(R.color.white));
         }
 
         return view;

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,10 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.TreeMap;
-
-public class MainActivity extends AppCompatActivity {
+public class RegistAndLoginActivity extends AppCompatActivity {
     private FirebaseDatabase db;
     private DatabaseReference dbr;
     private FirebaseAuth mAuth;
@@ -30,35 +28,31 @@ public class MainActivity extends AppCompatActivity {
     public Button loginButton;
     public Button registerButton;
     public String name;
-    private Profile pr;
     FirebaseUser cUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
-
         init();
-
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         cUser=mAuth.getCurrentUser();
-
         if (cUser!=null){
             //переход в главную домашнюю активность если пользователь уже заходил
-            Intent i=new Intent(MainActivity.this,MainActivity2.class);
+            Intent i=new Intent(RegistAndLoginActivity.this, MainActivityHome.class);
             startActivity(i);
         }else{
-            Toast.makeText(getApplicationContext(),"user null",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(),"user null",Toast.LENGTH_SHORT).show();
         }
 
         registerButton.setOnClickListener(new View.OnClickListener() {// регистрация пользователя
             @Override
             public void onClick(View view) {
+
                 String email=login.getText().toString();
                 String passwordd=password.getText().toString();
                 if (!email.equals("") && ! passwordd.equals("")){
@@ -70,29 +64,29 @@ public class MainActivity extends AppCompatActivity {
                                 cUser=mAuth.getCurrentUser();
                                 //создание записи в бд, где хранится имя, эл почта и описание пользователя
 
-                                ProfileMood prm1=new ProfileMood(1,"#FF9fd4a9","green");
-                                ProfileMood prm2=new ProfileMood(2,"#FFffedb3","yellow");
-                                ProfileMood prm3=new ProfileMood(3,"#FFa7bffc","blue");
-                                ProfileMood prm4=new ProfileMood(4,"#FFfca4a4","red");
-                                ProfileMood prm5=new ProfileMood(5,"#FFffbadf","pink");
-                                Profile pr=new Profile(cUser.getEmail(),cUser.getUid(),"");
+                                ProfileMood prm1=new ProfileMood( Color.parseColor("#FF9fd4a9"),"green");
+                                ProfileMood prm2=new ProfileMood(Color.parseColor("#FFffedb3"),"yellow");
+                                ProfileMood prm3=new ProfileMood(Color.parseColor("#FFa7bffc"),"blue");
+                                ProfileMood prm4=new ProfileMood(Color.parseColor("#FFfca4a4"),"red");
+                                ProfileMood prm5=new ProfileMood(Color.parseColor("#FFffbadf"),"pink");
+                                Profile pr=new Profile(cUser.getEmail(),cUser.getUid(),"","");
                                 dbr.child("user").child(cUser.getUid()).setValue(pr);
-                                dbr.child("users_mood").child(cUser.getUid()).child(prm1.moodId+"").setValue(prm1);
-                                dbr.child("users_mood").child(cUser.getUid()).child(prm2.moodId+"").setValue(prm2);
-                                dbr.child("users_mood").child(cUser.getUid()).child(prm3.moodId+"").setValue(prm3);
-                                dbr.child("users_mood").child(cUser.getUid()).child(prm4.moodId+"").setValue(prm4);
-                                dbr.child("users_mood").child(cUser.getUid()).child(prm5.moodId+"").setValue(prm5);
+                                dbr.child("users_mood").child(cUser.getUid()).child(prm1.colorMood+"").setValue(prm1);
+                                dbr.child("users_mood").child(cUser.getUid()).child(prm2.colorMood+"").setValue(prm2);
+                                dbr.child("users_mood").child(cUser.getUid()).child(prm3.colorMood+"").setValue(prm3);
+                                dbr.child("users_mood").child(cUser.getUid()).child(prm4.colorMood+"").setValue(prm4);
+                                dbr.child("users_mood").child(cUser.getUid()).child(prm5.colorMood+"").setValue(prm5);
 
-                                Toast.makeText(getApplicationContext(),"create user",Toast.LENGTH_SHORT).show();
-                                Intent i=new Intent(MainActivity.this,HelloActivity.class);
+                                Toast.makeText(getApplicationContext(),"Пользователь зарегистрировался",Toast.LENGTH_SHORT).show();
+                                Intent i=new Intent(RegistAndLoginActivity.this, AddInformationActivity.class);
                                 startActivity(i);
                             }else{
-                                Toast.makeText(getApplicationContext(),"failed to create user",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(),"Что-то пошло не так",Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 }else{
-                    Toast.makeText(getApplicationContext(),"empty fields",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),"Заполните поля",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -107,16 +101,16 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()){
                                 //переход в гл дом активность если пользователь успешно зашел
-                                Toast.makeText(getApplicationContext(),"user sign in",Toast.LENGTH_SHORT).show();
-                                Intent i=new Intent(MainActivity.this,MainActivity2.class);
+                                Toast.makeText(getApplicationContext(),"Пользователь вошел",Toast.LENGTH_SHORT).show();
+                                Intent i=new Intent(RegistAndLoginActivity.this, MainActivityHome.class);
                                 startActivity(i);
                             }else{
-                                Toast.makeText(getApplicationContext(),"failed user sign in",Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getApplicationContext(),"Что-то пошло не так",Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
                 }else{
-                    Toast.makeText(getApplicationContext(),"empty fields",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Заполните поля",Toast.LENGTH_SHORT).show();
                 }
 
             }

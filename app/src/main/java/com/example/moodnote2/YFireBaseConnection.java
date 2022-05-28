@@ -6,6 +6,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.moodnote2.ui.home.CalendarViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.gms.tasks.Tasks;
@@ -21,15 +22,15 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Semaphore;
 
-public class FireBaseConnection {
+public class YFireBaseConnection {
     private FirebaseDatabase db;
     private DatabaseReference dbr;
     private FirebaseAuth mAuth;
     private ProfileMood prm;
-    private ArrayList<String> moods;
+    private ArrayList<Integer> moods;
     private ArrayList<String> states;
 
-    public FireBaseConnection() {
+    public YFireBaseConnection() {
 
     }
 
@@ -40,15 +41,15 @@ public class FireBaseConnection {
         db=FirebaseDatabase.getInstance();
         dbr=db.getReference();
         cUser=mAuth.getCurrentUser();
-        moods=new ArrayList<String>();
+        moods=new ArrayList<Integer>();
         states=new ArrayList<String>();
     }
-    public void SaveMood(String date, String day,String month,String year,String moodId ){
+    public void SaveMood(String date, String day,String month,String year,String moodId,String note ){
         init();
-        dmood=new DayMood(day,month,year,moodId);
-        dbr.child("moods").child(cUser.getUid()).child(date).setValue(dmood);
+        dmood=new DayMood(day,month,year,moodId,note);
+        dbr.child("moods").child(cUser.getUid()).child(year).child(month).child(date).setValue(dmood);
     }
-    public ArrayList<String> GetMoods(){
+    public ArrayList<Integer> GetMoods(){
         init();
         moods.clear();
         if (cUser!=null) {
